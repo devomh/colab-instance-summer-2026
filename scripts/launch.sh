@@ -9,7 +9,7 @@ listen=127.0.0.1
 [ "$TUNNEL" = tailscale ] && listen=0.0.0.0
 
 if [ "$SYNC_INTERVAL" -gt 0 ]; then
-  nohup "$REPO_ROOT/scripts/sync_outputs.sh" > "$RUN_DIR/sync.log" 2>&1 &
+  nohup bash "$REPO_ROOT/scripts/sync_outputs.sh" > "$RUN_DIR/sync.log" 2>&1 &
   echo $! > "$RUN_DIR/sync.pid"
 fi
 
@@ -24,7 +24,7 @@ echo $! > "$RUN_DIR/comfyui.pid"
 wait_for_port "$COMFY_PORT" 900 || { tail -40 "$comfylog"; die "ComfyUI failed to start"; }
 log "ComfyUI is up"
 
-"$REPO_ROOT/scripts/tunnel.sh"
+bash "$REPO_ROOT/scripts/tunnel.sh"
 
 log "tailing $comfylog (interrupt the cell to stop tailing; servers keep running)"
 tail -f "$comfylog"
