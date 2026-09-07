@@ -22,7 +22,9 @@ torch_before="$(python3 -c 'import torch;print(torch.__version__)' 2>/dev/null |
 
 log "installing ComfyUI requirements"
 pip install -q -r "$COMFY_ROOT/requirements.txt"
-pip install -q "huggingface_hub[cli]" hf_transfer
+# huggingface_hub 1.x ships the CLI in the base package; hf_transfer and
+# hf_xet are the accelerated download backends.
+pip install -q huggingface_hub hf_transfer hf_xet
 
 torch_after="$(python3 -c 'import torch;print(torch.__version__)' 2>/dev/null || echo none)"
 [ "$torch_before" = "$torch_after" ] || log "WARNING: torch changed $torch_before -> $torch_after; restart the runtime if CUDA breaks"
