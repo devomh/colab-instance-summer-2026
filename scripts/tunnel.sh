@@ -30,7 +30,16 @@ case "$TUNNEL" in
     ;;
 
   tailscale)
-    [ -n "${TS_AUTHKEY:-}" ] || die "set TS_AUTHKEY (Tailscale auth key) for TUNNEL=tailscale"
+    # Secrets pasted into the Colab panel often carry a trailing newline, which
+    # Tailscale rejects with a misleading "unable to validate API key".
+    TS_AUTHKEY="$(printf '%s' "${TS_AUTHKEY:-}" | tr -d '[:space:]')"
+    [ -n "$TS_AUTHKEY" ] || die "set TS_AUTHKEY (Tailscale auth key) for TUNNEL=tailscale"
+    case "$TS_AUTHKEY" in
+      tskey-auth-*) ;;
+      tskey-api-*) die "TS_AUTHKEY holds an API access token; generate an auth key instead (Settings -> Keys -> Generate auth key)" ;;
+      tskey-*)     log "WARNING: TS_AUTHKEY is not a tskey-auth- key, this may fail" ;;
+      *)           die "TS_AUTHKEY does not look like a Tailscale key (expected tskey-auth-...)" ;;
+    esac
     if ! have tailscaled; then
       log "installing tailscale"
       curl -fsSL https://tailscale.com/install.sh | sh >/dev/null
