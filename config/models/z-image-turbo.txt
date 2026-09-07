@@ -1,0 +1,11 @@
+# Z-Image-Turbo, ComfyUI packaging. ~12 GB, few-step sampler, matches the
+# "Z-Image-Turbo: Text to Image" template in the ComfyUI template browser.
+# Quantised build: wants an L4 or newer. On a T4 use the bf16 lines instead,
+# since sm75 has no fp8 or int8 tensor path.
+hf Comfy-Org/z_image_turbo split_files/diffusion_models/z_image_turbo_int8_convrot.safetensors diffusion_models
+hf Comfy-Org/z_image_turbo split_files/text_encoders/qwen_3_4b_fp8_mixed.safetensors text_encoders
+hf Comfy-Org/z_image_turbo split_files/vae/ae.safetensors vae
+
+# bf16 alternative, 20 GB, slower but no quantised kernels required:
+# hf Comfy-Org/z_image_turbo split_files/diffusion_models/z_image_turbo_bf16.safetensors diffusion_models
+# hf Comfy-Org/z_image_turbo split_files/text_encoders/qwen_3_4b.safetensors text_encoders

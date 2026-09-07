@@ -49,6 +49,7 @@ Manifests in `config/models/`. Add a line to add a file.
 | Profile | Size | Needs |
 |---|---|---|
 | `smoke` | 2 GB | Any GPU |
+| `z-image-turbo` | 12 GB | L4 or newer, few-step sampler |
 | `flux1-dev` | 17 GB | L4 or better |
 | `qwen-image` | 30 GB | 40 GB VRAM |
 | `ltx-2.5` | 39 GB | A100 40GB, `HF_TOKEN`, license accepted on the model page |
