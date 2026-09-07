@@ -1,0 +1,2 @@
+# ~2 GB. Ungated. Use this to prove the tunnel + GPU path works in ~1 minute.
+hf Comfy-Org/stable-diffusion-v1-5-archive v1-5-pruned-emaonly-fp16.safetensors checkpoints

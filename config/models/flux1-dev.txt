@@ -1,0 +1,3 @@
+# ~17 GB single-file FP8 build. Ungated mirror maintained by Comfy-Org.
+# Good default for image work on an L4 or A100.
+hf Comfy-Org/flux1-dev flux1-dev-fp8.safetensors checkpoints

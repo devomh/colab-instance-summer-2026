@@ -1,0 +1,4 @@
+# One git URL per line. Cloned into ComfyUI/custom_nodes on every bootstrap.
+# LTX-2.5 is supported natively by ComfyUI, so it needs no custom node.
+https://github.com/Comfy-Org/ComfyUI-Manager
+https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite

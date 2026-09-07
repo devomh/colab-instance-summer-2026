@@ -1,0 +1,3 @@
+config/comfy.env
+__pycache__/
+*.pyc

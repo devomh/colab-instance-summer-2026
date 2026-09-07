@@ -1,0 +1,9 @@
+# LTX-2.5 distilled, int8 build: ~39 GB total, ~5-10 min on Colab's link.
+# Lightricks/LTX-2.5 is gated (auto-approve): accept the license on the model
+# page once, then set HF_TOKEN as a Colab secret.
+hf Lightricks/LTX-2.5 diffusion_models/ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors diffusion_models
+hf Lightricks/LTX-2.5 text_encoders/gemma4-12b-with-proj-ltx-2.5-comfy-int8-convrot.safetensors text_encoders
+hf Lightricks/LTX-2.5 vae/ltx-2.5-video-vae-bf16.safetensors vae
+hf Lightricks/LTX-2.5 vae/ltx-2.5-audio-vae-bf16.safetensors vae
+# Text-to-video workflows also want the spatial upscaler:
+hf Lightricks/LTX-2.5 latent_upscale_models/ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors latent_upscale_models
