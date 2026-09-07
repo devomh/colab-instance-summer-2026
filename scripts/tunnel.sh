@@ -50,9 +50,16 @@ case "$TUNNEL" in
     sleep 3
     tailscale up --authkey="$TS_AUTHKEY" --hostname="${TS_HOSTNAME:-colab-comfy}" --ssh
     ip="$(tailscale ip -4 | head -1)"
+    # Tailscale appends a suffix when the requested name is still held by a
+    # node that has not been reaped yet, so report what it actually assigned.
+    name="$(tailscale status --json 2>/dev/null \
+      | python3 -c 'import json,sys; print(json.load(sys.stdin)["Self"]["DNSName"].split(".")[0])' 2>/dev/null || true)"
+    [ -n "$name" ] || name="$TS_HOSTNAME"
     echo "http://$ip:$COMFY_PORT" > "$RUN_DIR/url.txt"
     printf '\n\033[1;32mComfyUI: http://%s:%s   (tailnet only)\033[0m\n' "$ip" "$COMFY_PORT"
-    printf '\033[1;32mSSH:     ssh root@%s\033[0m\n\n' "${TS_HOSTNAME:-colab-comfy}"
+    printf '\033[1;32mSSH:     ssh root@%s\033[0m\n' "$name"
+    [ "$name" = "$TS_HOSTNAME" ] || printf '\033[1;33m         (name %s was taken by an older runtime)\033[0m\n' "$TS_HOSTNAME"
+    printf '\033[1;32m         nvidia-smi over ssh needs LD_LIBRARY_PATH=/usr/lib64-nvidia\033[0m\n\n'
     ;;
 
   none)
