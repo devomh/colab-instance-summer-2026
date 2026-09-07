@@ -54,6 +54,10 @@ Manifests in `config/models/`. Add a line to add a file.
 | `qwen-image` | 30 GB | 40 GB VRAM |
 | `ltx-2.5` | 39 GB | A100 40GB, `HF_TOKEN`, license accepted on the model page |
 
+Workflows in `workflows/ui/` are copied into the Drive workflow folder on
+every bootstrap, so a fresh Drive starts with something that runs. The
+`z-image-turbo` workflow there matches the profile of the same name.
+
 `fetch_models.py` times every transfer and writes the results to
 `Drive/colab-comfy/logs/transfer_bench.jsonl`. Run it with `--bench` to see
 whether Hugging Face or the Drive cache is actually faster for you.
