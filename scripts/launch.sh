@@ -10,7 +10,17 @@ listen=127.0.0.1
 
 if [ "$SYNC_INTERVAL" -gt 0 ]; then
   nohup bash "$REPO_ROOT/scripts/sync_outputs.sh" > "$RUN_DIR/sync.log" 2>&1 &
-  echo $! > "$RUN_DIR/sync.pid"
+  sync_pid=$!
+  echo "$sync_pid" > "$RUN_DIR/sync.pid"
+  # A background failure here would otherwise be invisible, and outputs would
+  # never reach Drive.
+  sleep 2
+  if kill -0 "$sync_pid" 2>/dev/null; then
+    log "output sync loop running (pid $sync_pid)"
+  else
+    log "WARNING: output sync loop died, outputs will NOT reach Drive"
+    sed 's/^/  /' "$RUN_DIR/sync.log"
+  fi
 fi
 
 comfylog="$RUN_DIR/comfyui.log"
